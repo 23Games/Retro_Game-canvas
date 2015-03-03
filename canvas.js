@@ -19,12 +19,53 @@ function rec(x,y,w,h){              //draw rectangle; x-position on x axis; y-po
   ctx.fillRect(x, y, w, h);
 }
 
-function ground(){
-  for(var i=0;i<=)
-  rec
+function ground(x,y){
+
+  for(var i=0;i<=width/12+12;i++){
+    rec(x+12*i,y,10,1);
+  }
 }
 
-var frame=0;
+var player_pos_x;
+var player_pos_y;
+var player_speed_y=0;
+var player_speed_y_max;
+var in_air=false;//boolean
+
+function player(x,y){
+  var p_height=80;
+  var p_width=40;
+  jump()
+  rec(x,y-p_height-player_speed_y,p_width,p_height);
+}
+
+
+
+function checkKey(e) {
+    e = e || window.event;
+    if ((e.keyCode == '38'/* up arrow*/) ||(e.keyCode == '32'/*spacebar*/)) {
+      if(!in_air){
+        in_air=true;
+        player_speed_y=100;
+      }
+    }
+}
+
+function player_control(x,y){
+
+}
+
+function jump(){//j_b-in_air boolean
+  if (player_speed_y>0){
+  //if (j_bool){
+    player_speed_y-=2;
+  }
+  else{
+    in_air=false;
+  }
+}
+
+var frame=-12;
 ;(function () {
   function main() {
     window.requestAnimationFrame( main );
@@ -35,10 +76,13 @@ var frame=0;
     // Your main loop contents.
     ctx.fillStyle = "#232323";
     ctx.fillRect(0, 0, width, height);
-    rec(2*frame,height/2,10,2);
+    ground(frame*2,height/2);
+    player(150,height/2-2);
+    document.onkeydown = checkKey;
+    //rec(2*frame,height/2,10,2);
     frame++;
-    if(frame*2>width){
-      frame=0;
+    if(frame>0){
+      frame=-12;
     }
 
   }
