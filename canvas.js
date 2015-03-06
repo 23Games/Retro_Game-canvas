@@ -14,6 +14,33 @@ console.log(height);*/
 //game wariable
 
 
+
+
+var player_pos_x;
+var player_pos_y;
+var player_speed_y=0;
+var player_speed_y_max;
+var in_air=false;//boolean
+var points=0;
+var d_time=0;
+var obstycle_array;
+var speed
+
+function O_obstycle (w,h) {//class for obstycle
+    this.O_x =width;
+    this.O_y =height/2;
+    this.O_width=w;
+    this.O_height=h;
+}
+
+function obstycle_creator(){
+  obstycle_array.push(new O_obstycle(20,20));
+}
+
+function O_move(){
+
+}
+
 function rec(x,y,w,h){              //draw rectangle; x-position on x axis; y-position on y axis; h-height of bar;  w-width of bar
   ctx.fillStyle = "white";      //bar color
   ctx.fillRect(x, y, w, h);
@@ -26,20 +53,12 @@ function ground(x,y){
   }
 }
 
-var player_pos_x;
-var player_pos_y;
-var player_speed_y=0;
-var player_speed_y_max;
-var in_air=false;//boolean
-
 function player(x,y){
   var p_height=80;
   var p_width=40;
   jump()
   rec(x,y-p_height-player_speed_y,p_width,p_height);
 }
-
-
 
 function checkKey(e) {
     e = e || window.event;
@@ -49,6 +68,23 @@ function checkKey(e) {
         player_speed_y=100;
       }
     }
+}
+
+function obstycle(){
+
+}
+
+function points_counter(){
+  if(d_time==60){
+    points++;
+    d_time=0
+  }
+  else{
+    d_time++;
+  }
+  ctx.font = "48px serif";
+  ctx.color = "#ffffff";
+  ctx.fillText(points, 200, 200);
 }
 
 function player_control(x,y){
@@ -80,6 +116,7 @@ var frame=-12;
     player(150,height/2-2);
     document.onkeydown = checkKey;
     //rec(2*frame,height/2,10,2);
+    points_counter();
     frame++;
     if(frame>0){
       frame=-12;
