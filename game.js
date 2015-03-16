@@ -63,29 +63,50 @@
   }
 
 //player class prototype and functions
-  function Player (w,h) {//class for obstycle
-      this.P_x =width;
-      this.P_y =height/2;
-      this.P_width=80;
-      this.P_height=40;
+var Player = function (w,h) {//class for player
+      this.P_x =200;
+      this.P_y =height/2-h-2;
+      this.P_width=w;
+      this.P_height=h;
       this.P_score=0;
+      this.in_air_BOOL=false;
+      this.vector_y=0;
+      this.vector_y_max=20;
   }
-  function Player_u(){
-
-  }
+  Player.prototype.jump = function() {
+    
+  };
+  Player.prototype.update = function() {
+    if(vector_y<=vector_y_max){
+      this.vector_y+=1;
+    }
+  };
+    if(in_air_BOOL){
+      this.vector_y-=1
+    }
+    else{
+      this.vector_y=0
+    }
+  };
+  Player.prototype.render = function() {
+    ctx.fillStyle = "white";      //color
+    ctx.fillRect(this.P_x, this.P_y, this.P_width, this.P_height);
+  };
+  var player_1=new Player(40,80);
 
 //update function
   function update(){
     ground_u();
+    player_1.update();
 
-
-    render()
+    render();
   }
 
 //render function
   function render(){
     ctx.clearRect(0, 0, width, height)//canvas clear
-    ground(ground_x,height/2)
+    ground(ground_x,height/2);
+    player_1.render();
   }
 
 //main loop
