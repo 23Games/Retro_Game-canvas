@@ -14,7 +14,7 @@
 
 //game wariable
   var d_time=0; //delta time
-  var g=1;//-in pixsels per frame          //Gravity also called gravitation force
+  var grav=1;//-in pixsels per frame          //Gravity also called gravitation force
   var ground_x=0;
 //obstyle class prototype and functions
   function O_obstycle (w,h) {//class for obstycle
@@ -65,34 +65,52 @@
 //player class prototype and functions
 var Player = function (w,h) {//class for player
       this.P_x =200;
-      this.P_y =height/2-h-2;
+      this.P_y =Math.round(height/2-h-2);
       this.P_width=w;
       this.P_height=h;
       this.P_score=0;
       this.in_air_BOOL=false;
       this.vector_y=0;
-      this.vector_y_max=20;
+      this.vector_y_max=0;
   }
   Player.prototype.jump = function() {
-    
+    console.log("jump");//debug
+    if(!this.in_air_BOOL){
+      this.in_air_BOOL=true;
+      this.vector_y_max+=10;
+    }
+
   };
   Player.prototype.update = function() {
-    if(vector_y<=vector_y_max){
-      this.vector_y+=1;
+    if(this.P_y<9){
+      this.in_air_BOOL==false;
     }
-  };
-    if(in_air_BOOL){
-      this.vector_y-=1
+    if(this.in_air_BOOL){
+      if(this.vector_y_max>0){
+        this.vector_y+=2;
+        this.vector_y_max--;
+      }
+      console.log("P_y: "+this.P_y);//debug
+      console.log("vector_y_max: "+this.vector_y_max);//debug
+      console.log("vector_y: "+this.vector_y);//debug
+      this.P_y+=-this.vector_y+grav;
+      this.vector_y+=-grav;
     }
-    else{
-      this.vector_y=0
-    }
+
   };
   Player.prototype.render = function() {
     ctx.fillStyle = "white";      //color
     ctx.fillRect(this.P_x, this.P_y, this.P_width, this.P_height);
   };
+
   var player_1=new Player(40,80);
+
+  function checkKey(e) {
+      e = e || window.event;
+      if ((e.keyCode == '38'/* up arrow*/) ||(e.keyCode == '32'/*spacebar*/)) {
+          player_1.jump();
+        }
+      }
 
 //update function
   function update(){
@@ -113,6 +131,7 @@ var Player = function (w,h) {//class for player
   ;(function () {
     function main() {
       window.requestAnimationFrame( main );
+      document.onkeydown = checkKey;
       update();
       d_time++
       //version pre-alpha stuff
