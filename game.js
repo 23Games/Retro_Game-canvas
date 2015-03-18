@@ -82,9 +82,6 @@ var Player = function (w,h) {//class for player
 
   };
   Player.prototype.update = function() {
-    if(this.P_y<9){
-      this.in_air_BOOL==false;
-    }
     if(this.in_air_BOOL){
       if(this.vector_y_max>0){
         this.vector_y+=2;
@@ -93,8 +90,16 @@ var Player = function (w,h) {//class for player
       console.log("P_y: "+this.P_y);//debug
       console.log("vector_y_max: "+this.vector_y_max);//debug
       console.log("vector_y: "+this.vector_y);//debug
-      this.P_y+=-this.vector_y+grav;
-      this.vector_y+=-grav;
+      if((this.P_y-this.vector_y+grav)<height/2-this.P_height-2){
+        this.P_y+=-this.vector_y+grav;
+        this.vector_y+=-grav;
+      }
+      else{
+        this.in_air_BOOL=false;
+        this.P_y=height/2-this.P_height-2;
+        this.vector_y=0;
+        this.vector_y_max=0;
+      }
     }
 
   };
