@@ -4,7 +4,7 @@
 
 //width & height
   var width = window.innerWidth;
-  var height =Math.floor(window.innerHeight/2) //Math.floor(window.innerHeight/1.7);//1.7 ratio aspect
+  var height =Math.floor(window.innerHeight/1.7) //Math.floor(window.innerHeight/1.7);//1.7 ratio aspect
   canvas.width = width;                           //set canvas width
   canvas.height = height;                         //set canvas height
 
@@ -77,7 +77,7 @@ var Player = function (w,h) {//class for player
     console.log("jump");//debug
     if(!this.in_air_BOOL){
       this.in_air_BOOL=true;
-      this.vector_y_max+=10;
+      this.vector_y_max+=15;
     }
 
   };
@@ -87,9 +87,11 @@ var Player = function (w,h) {//class for player
         this.vector_y+=2;
         this.vector_y_max--;
       }
-      console.log("P_y: "+this.P_y);//debug
+
+      /*console.log("P_y: "+this.P_y);//debug
       console.log("vector_y_max: "+this.vector_y_max);//debug
-      console.log("vector_y: "+this.vector_y);//debug
+      console.log("vector_y: "+this.vector_y);//debug*/
+
       if((this.P_y-this.vector_y+grav)<height/2-this.P_height-2){
         this.P_y+=-this.vector_y+grav;
         this.vector_y+=-grav;
