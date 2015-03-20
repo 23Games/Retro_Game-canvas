@@ -16,20 +16,25 @@
   var d_time=0; //delta time
   var grav=1;//-in pixsels per frame          //Gravity also called gravitation force
   var ground_x=0;
+
 //obstyle class prototype and functions
   function O_obstycle (w,h) {//class for obstycle
       this.O_x =width;
-      this.O_y =height/2;
+      this.O_y =height/2-h;
       this.O_width=w;
       this.O_height=h;
+      this.life_time=10;//life of obstycle
   }
-
+  //O_.prototype.obstycle_creator = function() {
   function obstycle_creator(){
     obstycle_array.push(new O_obstycle(20,20));
   }
-
+  O_obstycle.prototype.obstycle_r = function(element, index, array){
+    ctx.fillStyle = "white";      //color
+    ctx.fillRect(this.O_x, this.O_y, this.O_width, this.O_height);
+  }
   function obstycle_u(){
-
+    obstycle_array.forEach(obstycle_r);
   }
 
 //ground functions
@@ -110,7 +115,7 @@ var Player = function (w,h) {//class for player
     ctx.fillRect(this.P_x, this.P_y, this.P_width, this.P_height);
   };
 
-  var player_1=new Player(40,80);
+
 
   function checkKey(e) {
       e = e || window.event;
@@ -122,6 +127,10 @@ var Player = function (w,h) {//class for player
 //update function
   function update(){
     ground_u();
+    if(d_time%60==0){
+      obstycle_creator();
+    }
+    obstycle_u();
     player_1.update();
 
     render();
@@ -133,6 +142,9 @@ var Player = function (w,h) {//class for player
     ground(ground_x,height/2);
     player_1.render();
   }
+//objects
+var player_1=new Player(40,80);
+var obstycle_array; //obstycle object array
 
 //main loop
   ;(function () {
