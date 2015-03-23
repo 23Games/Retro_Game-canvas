@@ -19,22 +19,27 @@
 
 //obstyle class prototype and functions
   function O_obstycle (w,h) {//class for obstycle
-      this.O_x =width;
+      this.O_x =200;
       this.O_y =height/2-h;
       this.O_width=w;
       this.O_height=h;
       this.life_time=10;//life of obstycle
   }
+  var obstycle_array=[]; //obstycle object array
   //O_.prototype.obstycle_creator = function() {
   function obstycle_creator(){
     obstycle_array.push(new O_obstycle(20,20));
+    console.log("new obstycle");
   }
-  O_obstycle.prototype.obstycle_r = function(element, index, array){
+  O_obstycle.prototype.obstycle_r = function(){
+    console.log("render");
     ctx.fillStyle = "white";      //color
     ctx.fillRect(this.O_x, this.O_y, this.O_width, this.O_height);
   }
   function obstycle_u(){
-    obstycle_array.forEach(obstycle_r);
+    for(var i=0;i<obstycle_array.length;i++){
+      obstycle_array[i].obstycle_r();
+    }
   }
 
 //ground functions
@@ -122,14 +127,14 @@ var Player = function (w,h) {//class for player
       if ((e.keyCode == '38'/* up arrow*/) ||(e.keyCode == '32'/*spacebar*/)) {
           player_1.jump();
         }
+      if ((e.keyCode == '79'/* up arrow*/)) {
+          obstycle_creator();
+        }
       }
 
 //update function
   function update(){
     ground_u();
-    if(d_time%60==0){
-      obstycle_creator();
-    }
     obstycle_u();
     player_1.update();
 
@@ -144,7 +149,7 @@ var Player = function (w,h) {//class for player
   }
 //objects
 var player_1=new Player(40,80);
-var obstycle_array; //obstycle object array
+
 
 //main loop
   ;(function () {
