@@ -14,39 +14,20 @@
 
 //game wariable
   var d_time=0; //delta time
-  var grav=1;//-in pixsels per frame          //Gravity also called gravitation force
-  var ground_x=0;
 
-
-//ground functions
-  /*function rec(x,y,w,h,color){   //draw rectangle; x-position on x axis; y-position on y axis; h-height of bar;  w-width of bar color-string for color hexdec(like #232323)
-    ctx.fillStyle = color;       //bar color
-    ctx.fillRect(x, y, w, h,"#ffffff");
-  }*/
-
-  function ground(x,y){
-    var l=width/12;
-    ctx.beginPath();
-    ctx.strokeStyle="white"
-    for (var i=0; i<l+1; i++) {
-      ctx.moveTo(x+(12*i), y);
-      ctx.lineTo(x+(10*(i+1)+2*i), y);
+//Sprite class prototype and functions
+  var Sprite = function () {//class for Sprite
+        this.S_x =0;
+        this.S_y =0;
+        this.S_width=0;
+        this.S_height=0;
     }
-    ctx.stroke();
-    /*for(var i=0;i<=width/12+12;i++){
-      rec(x+12*i,y,10,1);
-    }*/
+  Sprite.prototype = {
+    addVertex: function(v){
+    this.vertices.push(v);
   }
-  function ground_u(){
-    if(d_time%1==0){
-      ground_x--;
-      //debug
-      //console.log(ground_x);
-    }
-    if(ground_x<-12){
-      ground_x=0;
-    }
-  }
+};
+
 
 //player class prototype and functions
 var Player = function (w,h) {//class for player
@@ -96,7 +77,7 @@ var Player = function (w,h) {//class for player
     ctx.fillRect(this.P_x, this.P_y, this.P_width, this.P_height);
   };
 
-  //obstyle class prototype and functions
+//obstyle class prototype and functions
     function O_obstycle (w,h) {//class for obstycle
         this.O_x =200;
         this.O_y =height/2-h;
@@ -129,7 +110,7 @@ var Player = function (w,h) {//class for player
       }
     };
 
-
+//key events handler
   function checkKey(e) {
       e = e || window.event;
       if ((e.keyCode == '38'/* up arrow*/) ||(e.keyCode == '32'/*spacebar*/)) {
@@ -166,21 +147,6 @@ var player_1=new Player(40,80);
       document.onkeydown = checkKey;
       update();
       d_time++
-      //version pre-alpha stuff
-      //window.cancelAnimationFrame( MyGame.stopMain );
-      //MyGame.stopMain = window.requestAnimationFrame( main );
-      //var tNow = window.performance.now();
-      /*ctx.fillStyle = "#232323";
-      ctx.fillRect(0, 0, width, height);
-      ground(frame*2,height/2);
-      player(150,height/2-2);
-      document.onkeydown = checkKey;
-      //rec(2*frame,height/2,10,2);
-      points_counter();
-      frame++;
-      if(frame>0){
-        frame=-12;
-      }*/
     }
     main(); // Start the cycle
   })();
